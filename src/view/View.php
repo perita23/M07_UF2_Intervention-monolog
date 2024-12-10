@@ -57,7 +57,7 @@ class View
 <body style="margin: 0 auto;">
     <section style="width: 100vw;" class="p-4">
         <h1>Bienvenido</h1>
-        <h3>Tus reparaciones...</h3>
+        <h3>Tus reparaciones:</h3>
         <div class="d-flex gap-4">
             <?php
             $view = new View();
@@ -69,9 +69,21 @@ class View
     if ($_SESSION["userType"] == "employee") {
         ?>
         <section class="p-4">
-
-            <h2>panel de empleado</h2>
-            <form action=""></form>
+            <h2>panel dea</h2>
+            <h1>bañosstucom</h1>
+            <form>
+                <div class="w-50 border rounded">
+                    <input type="file" name="imageFile" class="w-100 m-2">
+                    <img style="width: 100;" src="#" alt="Imagentest">
+                    <hr>
+                    <div class="p-3">
+                        <p><b>name: </b></p>
+                        <p><b>fecha de registro: </b></p>
+                        <p><b>matricula: </b></p>
+                        <p><b>email: </b></p>
+                    </div>
+                </div>
+            </form>
         </section>
 
         <?php
