@@ -13,14 +13,14 @@ class reparation
 
     private string $email;
 
-    public function __construct($uuid, $name, $registerDate, $licensePlate, $email)
+    public function __construct($uuid, $name, $registerDate, $licensePlate, $email, $image)
     {
         $this->uuid = $uuid;
         $this->name = $name;
         $this->registerDate = new DateTime($registerDate);
         $this->licensePlate = $licensePlate;
-        $this->image = "imagentest";
         $this->email = $email;
+        $this->image = $image;
     }
 
 
@@ -89,6 +89,7 @@ class reparation
      */
     public function getImage()
     {
+
         return $this->image;
     }
 
@@ -126,7 +127,7 @@ class reparation
 
     /**
      * Get the value of email
-     */ 
+     */
     public function getEmail()
     {
         return $this->email;
@@ -136,7 +137,7 @@ class reparation
      * Set the value of email
      *
      * @return  self
-     */ 
+     */
     public function setEmail($email)
     {
         $this->email = $email;

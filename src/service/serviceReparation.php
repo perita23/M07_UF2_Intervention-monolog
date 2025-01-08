@@ -1,12 +1,11 @@
 <?php
 namespace MyWorkshop\service;
 
-use Exception;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use mysqli;
 use MyWorkshop\models\reparation;
-use Ramsey\Uuid\Generator\CombGenerator;
 use Ramsey\Uuid\Nonstandard\Uuid;
-use Ramsey\Uuid\Rfc4122\UuidV1;
 
 class serviceReparation
 {
@@ -18,6 +17,8 @@ class serviceReparation
 
     function getReparation($email, $type)
     {
+        $managerImage = new ImageManager(new Driver());
+
         $mysqli = $this->connect();
         if ($type == "employee") {
             $sql_sentence = "SELECT * FROM reparation";
@@ -29,13 +30,18 @@ class serviceReparation
 
         $data = [];
         while ($row = $result->fetch_assoc()) {
-
+            $imageObject = $managerImage->read($row["image"]);
+            if ($type != "employee") {
+                $imageObject->pixelate(30);
+                $row["uuid"] = "************************************";
+            }
             $reparation = new reparation(
                 $row["uuid"],
                 $row["name"],
                 $row["registerDate"],
                 $row["licensePlate"],
-                $row["email"]
+                $row["email"],
+                $imageObject->toPng()
             );
             $data[] = $reparation;
         }
@@ -44,16 +50,37 @@ class serviceReparation
 
     function insertReparation($email, $name, $date, $matricula, $image)
     {
+        $managerImage = new ImageManager(new Driver());
         $mysqli = $this->connect();
         $uuid = uuid::uuid4()->toString();
-        $imageData = bin2hex(file_get_contents(filename: $image));
-        $sql_sentence = "INSERT INTO `workshop`.`reparation` (`uuid`, `name`, `email`, `registerDate`, `licensePlate`, `image`) 
-        VALUES ('$uuid', '$name', '$email', '$date', '$matricula', 0x$imageData);";
-        var_dump($sql_sentence);
+        $imageData = file_get_contents($image);
+        $imageObject = $managerImage->read($imageData);
+        $imageObject->resize(1366, 768);
+        $imageObject->text("{$uuid}-{$matricula}", 100, 75, function ($font) {
+            $font->file(__DIR__ . "/../../resources/fonts/OpenSans-VariableFont_wdth,wght.ttf");
+            $font->size(34);
+            $font->color('#FF0000');
+            $font->align('left');
+            $font->valign('top');
+        });
 
-        if ($mysqli->query($sql_sentence) == true) {
+        $imageData = file_get_contents($imageObject->toPng()->toDataUri());
+        $imageData = $mysqli->real_escape_string($imageData);
+
+
+        $sql_sentence = "INSERT INTO `workshop`.`reparation` (`uuid`, `name`, `email`, `registerDate`, `licensePlate`, `image`) 
+                     VALUES ('$uuid', '$name', '$email', '$date', '$matricula', '$imageData');";
+        if ($mysqli->query($sql_sentence)) {
             $select_sql = "SELECT * FROM `workshop`.`reparation` WHERE `uuid` = '$uuid'";
-            return $mysqli->query($select_sql);
+            $row = $mysqli->query($select_sql)->fetch_assoc();
+            return new reparation(
+                $row["uuid"],
+                $row["name"],
+                $row["registerDate"],
+                $row["licensePlate"],
+                $row["email"],
+                $row["image"]
+            );
         }
     }
 }
