@@ -12,7 +12,7 @@ class serviceReparation
     function connect()
     {
         $db = parse_ini_file("../../config/db_config.ini");
-        return new mysqli($db["host"], $db["user"], $db["pwd"], $db["db_name"]); //4 db
+        return new mysqli($db["host"], $db["user"], $db["pwd"], $db["db_name"]);
     }
 
     function getReparation($email, $type)
@@ -41,14 +41,15 @@ class serviceReparation
                 $row["registerDate"],
                 $row["licensePlate"],
                 $row["email"],
-                $imageObject->toPng()
+                $imageObject->toPng(),
+                $row["idWorkshop"]
             );
             $data[] = $reparation;
         }
         return $data;
     }
 
-    function insertReparation($email, $name, $date, $matricula, $image)
+    function insertReparation($email, $name, $date, $matricula, $image, $idWorkshop)
     {
         $managerImage = new ImageManager(new Driver());
         $mysqli = $this->connect();
@@ -68,8 +69,8 @@ class serviceReparation
         $imageData = $mysqli->real_escape_string($imageData);
 
 
-        $sql_sentence = "INSERT INTO `workshop`.`reparation` (`uuid`, `name`, `email`, `registerDate`, `licensePlate`, `image`) 
-                     VALUES ('$uuid', '$name', '$email', '$date', '$matricula', '$imageData');";
+        $sql_sentence = "INSERT INTO `workshop`.`reparation` (`uuid`, `name`, `email`, `registerDate`, `licensePlate`, `image`, `idWorkshop`) 
+                     VALUES ('$uuid', '$name', '$email', '$date', '$matricula', '$imageData','$idWorkshop');";
         if ($mysqli->query($sql_sentence)) {
             $select_sql = "SELECT * FROM `workshop`.`reparation` WHERE `uuid` = '$uuid'";
             $row = $mysqli->query($select_sql)->fetch_assoc();
@@ -79,7 +80,8 @@ class serviceReparation
                 $row["registerDate"],
                 $row["licensePlate"],
                 $row["email"],
-                $row["image"]
+                $row["image"],
+                $row["idWorkshop"]
             );
         }
     }

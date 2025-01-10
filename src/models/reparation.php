@@ -13,7 +13,9 @@ class reparation
 
     private string $email;
 
-    public function __construct($uuid, $name, $registerDate, $licensePlate, $email, $image)
+    private int $idWorkshop;
+
+    public function __construct($uuid, $name, $registerDate, $licensePlate, $email, $image, $idWorkshop)
     {
         $this->uuid = $uuid;
         $this->name = $name;
@@ -21,6 +23,7 @@ class reparation
         $this->licensePlate = $licensePlate;
         $this->email = $email;
         $this->image = $image;
+        $this->idWorkshop = $idWorkshop;
     }
 
 
@@ -141,6 +144,26 @@ class reparation
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of idWorkshop
+     */ 
+    public function getIdWorkshop()
+    {
+        return $this->idWorkshop;
+    }
+
+    /**
+     * Set the value of idWorkshop
+     *
+     * @return  self
+     */ 
+    public function setIdWorkshop($idWorkshop)
+    {
+        $this->idWorkshop = $idWorkshop;
 
         return $this;
     }

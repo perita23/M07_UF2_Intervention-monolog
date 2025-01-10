@@ -26,6 +26,7 @@ class View
                 <div class="card-body">
                     <h5 class="card-title"><b>UUID:</b> <?php echo $value->getUuid() ?></h5>
                     <p class="card-text"><b>Nombre:</b> <?php echo $value->getName() ?></p>
+                    <p class="card-text"><b>Id taller:</b> <?php echo $value->getIdWorkshop() ?></p>
                     <p class="card-text"><b>Fecha de registro:</b> <?php echo $value->getRegisterDate()->format("Y-m-d") ?></p>
                     <?php
                     if ($_SESSION["userType"] == "employee") {
@@ -87,7 +88,7 @@ class View
                             <a class="nav-link active" href="./View.php">Reparaciones</a>
                         </li>
                         <li class="nav-item-">
-                        <a class="nav-link active" href="./closeSession.php">Cerrar sesion</a>
+                            <a class="nav-link active" href="./closeSession.php">Cerrar sesion</a>
                         </li>
                     </ul>
                 </div>
@@ -95,6 +96,7 @@ class View
         </nav>
     </div>
 </header>
+
 <body class="bg-light">
     <section class="container my-5">
         <div class="text-center mb-4">
@@ -116,29 +118,35 @@ class View
             <h2 class="text-center">Panel de empleado</h2>
             <p class="text-muted text-center">Añade la información de la reparación en los campos...</p>
             <form action="./View.php" class="row g-3" method="post" enctype="multipart/form-data">
-            <div class="col-md-6">
-                <label for="insertImage" class="form-label">Imagen</label>
-                <input type="file" name="insertImage" class="form-control" id="insertImage" required>
-            </div>
-            <div class="col-md-6">
-                <label for="insertName" class="form-label">Nombre</label>
-                <input type="text" name="insertName" class="form-control" id="insertName" required>
-            </div>
-            <div class="col-md-6">
-                <label for="insertDate" class="form-label">Fecha de registro</label>
-                <input type="date" name="insertDate" class="form-control" id="insertDate" required>
-            </div>
-            <div class="col-md-6">
-                <label for="insertMatricula" class="form-label">Matrícula</label>
-                <input type="text" name="insertMatricula" class="form-control" id="insertMatricula" pattern="[A-Z]{3}-[0-9]{4}" required>
-            </div>
-            <div class="col-md-6">
-                <label for="insertEmail" class="form-label">Email</label>
-                <input type="email" name="insertEmail" class="form-control" id="insertEmail" required>
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
+                <div class="col-md-6">
+                    <label for="insertImage" class="form-label">Imagen</label>
+                    <input type="file" name="insertImage" class="form-control" id="insertImage" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="insertName" class="form-label">Nombre taller</label>
+                    <input type="text" name="insertName" class="form-control" id="insertName" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="insertIdWorkshop" class="form-label">ID Taller</label>
+                    <input type="text" name="idWorkshop" class="form-control" id="idWorkshop" pattern="[0-9]{4}" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="insertDate" class="form-label">Fecha de registro</label>
+                    <input type="date" name="insertDate" class="form-control" id="insertDate" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="insertMatricula" class="form-label">Matrícula</label>
+                    <input type="text" name="insertMatricula" class="form-control" id="insertMatricula"
+                        pattern="[0-9]{4}-[A-Z]{3}" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="insertEmail" class="form-label">Email</label>
+                    <input type="email" name="insertEmail" class="form-control" id="insertEmail" required>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
             </form>
         </section>
         <?php
@@ -158,6 +166,7 @@ class View
                         <div class="card-body">
                             <p class="card-text"><b>UUID: </b><?php echo $newReparation->getUuid() ?></p>
                             <p class="card-text"><b>Nombre: </b><?php echo $newReparation->getName() ?></p>
+                            <p class="card-text"><b>Id taller:</b> <?php echo $newReparation->getIdWorkshop() ?></p>
                             <p class="card-text"><b>Fecha de registro:
                                 </b><?php echo $newReparation->getRegisterDate()->format("Y-m-d") ?></p>
                             <?php
