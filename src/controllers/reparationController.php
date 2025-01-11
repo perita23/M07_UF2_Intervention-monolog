@@ -21,7 +21,7 @@ class reparationController
             $_POST["insertDate"],
             $_POST["insertMatricula"],
             $_FILES["insertImage"]["tmp_name"],
-            $_POST["idWorkshop"]
+            $_POST["insertIdWorkshop"]
         );
         return $response;
     }

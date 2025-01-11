@@ -128,7 +128,7 @@ class View
                 </div>
                 <div class="col-md-6">
                     <label for="insertIdWorkshop" class="form-label">ID Taller</label>
-                    <input type="text" name="idWorkshop" class="form-control" id="idWorkshop" pattern="[0-9]{4}" required>
+                    <input type="text" name="insertIdWorkshop" class="form-control" id="insertIdWorkshop" pattern="[0-9]{4}" required>
                 </div>
                 <div class="col-md-6">
                     <label for="insertDate" class="form-label">Fecha de registro</label>
