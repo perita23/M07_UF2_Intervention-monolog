@@ -15,7 +15,7 @@ This repository contains a project for CarWorkshop using Monolog, a popular logg
     ```
 2. Navigate to the project directory:
     ```sh
-    cd M07_UF2_Intervention-monolog
+    cd carWorkshop
     ```
 3. Install the dependencies:
     ```sh
