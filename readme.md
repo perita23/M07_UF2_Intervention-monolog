@@ -1,4 +1,4 @@
-# M07_UF2_Intervention-monolog
+# carWorkShop
 
 This repository contains a project for CarWorkshop using Monolog, a popular logging library for PHP, and Intervention, an image handling and manipulation library for PHP.
 
@@ -11,7 +11,7 @@ This repository contains a project for CarWorkshop using Monolog, a popular logg
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/M07_UF2_Intervention-monolog.git
+    git clone https://github.com/perita23/carWorkShop
     ```
 2. Navigate to the project directory:
     ```sh
